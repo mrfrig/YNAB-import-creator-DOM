@@ -1,0 +1,13 @@
+{
+  "name": "YNAB DOM Import Creator",
+  "description": "Create YNAB import files for Dominican Republic banks",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png"
+    }
+  }
+}
