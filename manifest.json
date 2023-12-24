@@ -9,5 +9,17 @@
       "16": "images/icon-16.png",
       "32": "images/icon-32.png"
     }
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://ibp.bhd.com.do/*"],
+      "js": [
+        "scripts/createExportFile.js",
+        "scripts/bhd/login.js",
+        "scripts/bhd/account.js",
+        "scripts/bhd/credit.js",
+        "scripts/bhd/main.js"
+      ]
+    }
+  ]
 }
