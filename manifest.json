@@ -12,6 +12,15 @@
   },
   "content_scripts": [
     {
+      "matches": ["https://www.bpd.com.do/banco.popular.aspx*"],
+      "js": [
+        "scripts/createExportFile.js",
+        "scripts/popular/account.js",
+        "scripts/popular/credit.js",
+        "scripts/popular/main.js"
+      ]
+    },
+    {
       "matches": ["https://banking.online.scotiabank.com/account/*"],
       "js": [
         "scripts/createExportFile.js",
