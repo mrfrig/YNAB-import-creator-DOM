@@ -12,6 +12,15 @@
   },
   "content_scripts": [
     {
+      "matches": ["https://banking.online.scotiabank.com/account/*"],
+      "js": [
+        "scripts/createExportFile.js",
+        "scripts/scotia/account.js",
+        "scripts/scotia/credit.js",
+        "scripts/scotia/main.js"
+      ]
+    },
+    {
       "matches": ["https://ibp.bhd.com.do/*"],
       "js": [
         "scripts/createExportFile.js",
