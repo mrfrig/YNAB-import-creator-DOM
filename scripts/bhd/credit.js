@@ -84,6 +84,9 @@ function createCreditExport() {
     });
 
     exportUSButton.addEventListener("click", () => {
+      // https://backend.bhd.com.do/api/modal-cambio-rate?populate=deep
+      // ?.data.attributes.exchangeRates[0].sellingRate
+
       let csv = "Date,Payee,Memo,Outflow,Inflow";
       const rate = Number(prompt("Dollar rate")) || 1;
 
