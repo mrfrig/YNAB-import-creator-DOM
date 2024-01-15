@@ -75,7 +75,15 @@ function createCreditExport() {
         else csv += `\n${transDate},,${memo},${transAmount},`;
       }
 
-      createExportFile(csv);
+      const fileName =
+        document
+          .getElementById("container")
+          ?.lastChild?.firstChild?.firstChild?.firstChild?.lastChild?.firstChild?.firstChild?.firstChild?.firstChild?.innerText.replaceAll(
+            " ",
+            ""
+          ) || "scotiaBankCreditExport";
+
+      createExportFile(csv, fileName);
     });
   }
 }

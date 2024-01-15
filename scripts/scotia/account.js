@@ -57,7 +57,15 @@ function createAccountExport() {
         else csv += `\n${transDate},,${memo},,${transAmount.replaceAll("-", "")}`;
       }
 
-      createExportFile(csv);
+      const fileName =
+        document
+          .getElementById("container")
+          ?.lastChild?.firstChild?.firstChild?.firstChild?.lastChild?.firstChild?.firstChild?.firstChild?.firstChild?.innerText.replaceAll(
+            " ",
+            ""
+          ) || "scotiaBankAccountExport";
+
+      createExportFile(csv, fileName);
     });
   }
 }
