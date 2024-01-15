@@ -34,12 +34,18 @@ function createCreditExport() {
 
     exportButton.addEventListener("click", () => {
       let csv = "Date,Payee,Memo,Outflow,Inflow";
-      const year = new Date().getFullYear();
+      const today = new Date();
+      const currentMonth = today.getMonth();
+      const currentYear = today.getFullYear();
 
       for (const el of document.querySelectorAll(".md-maketable-reg-tr")) {
         let date = el.children[1].innerText.replaceAll("&nbsp;", "").replaceAll(" ", "");
-        const [day, month] = date.split("/");
-        date = `${month}/${day}/${year}`;
+        let [day, month] = date.split("/");
+        month = Number(month);
+        day = Number(day);
+
+        if (month - 1 === 11 && currentMonth === 0) date = `${month}/${day}/${currentYear - 1}`;
+        else date = `${month}/${day}/${currentYear}`;
 
         const memo = el.children[3].innerText.replaceAll(",", "");
 
