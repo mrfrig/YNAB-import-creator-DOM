@@ -1,8 +1,8 @@
 function createAccountExport() {
   if (!window.location.pathname.includes("banking")) return;
 
-  const detailsTabs = document.getElementById("detailsTabs");
-  if (!detailsTabs) return;
+  const tabsContainer = document.getElementById("tabsContainer");
+  if (!tabsContainer) return;
 
   const exportButtonId = "account-export";
   let exportButton = document.getElementById(exportButtonId);
@@ -15,7 +15,7 @@ function createAccountExport() {
       "ButtonCorestyle__StyledButton-canvas-core__sc-v39ho0-0 isoEur ButtonCore__button SecondaryButtonstyle__StyleSecondaryButtonCore-canvas-core__sc-1fquqhk-0 gGCHlM Button__button--secondary v1YOR28wgSR74iLV2PNvM";
     exportButton.style.width = "fit-content";
 
-    const buttonContainer = detailsTabs.lastChild.firstChild.firstChild.children[1].firstChild.firstChild;
+    const buttonContainer = tabsContainer.lastChild.firstChild.firstChild.children[1].firstChild.firstChild;
     buttonContainer.style.display = "flex";
     buttonContainer.style.flexDirection = "row";
     buttonContainer.style.justifyContent = "space-between";
@@ -41,7 +41,7 @@ function createAccountExport() {
         dic: "12",
       };
 
-      for (const el of detailsTabs.querySelectorAll("table tbody tr")) {
+      for (const el of tabsContainer.querySelectorAll("table tbody tr")) {
         const memo = el.querySelector('[data-testid="linkLabel"]').firstChild.firstChild.innerText.replaceAll(",", "");
 
         const date = el.firstChild.firstChild.innerText;

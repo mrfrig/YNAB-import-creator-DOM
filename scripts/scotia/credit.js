@@ -1,8 +1,8 @@
 function createCreditExport() {
   if (!window.location.pathname.includes("credit")) return;
 
-  const detailsTabs = document.getElementById("detailsTabs");
-  if (!detailsTabs) return;
+  const tabsContainer = document.getElementById("tabsContainer");
+  if (!tabsContainer) return;
 
   const exportButtonId = "credit-export";
   let exportButton = document.getElementById(exportButtonId);
@@ -15,7 +15,7 @@ function createCreditExport() {
       "ButtonCorestyle__StyledButton-canvas-core__sc-v39ho0-0 isoEur ButtonCore__button SecondaryButtonstyle__StyleSecondaryButtonCore-canvas-core__sc-1fquqhk-0 gGCHlM Button__button--secondary v1YOR28wgSR74iLV2PNvM";
     exportButton.style.width = "fit-content";
 
-    const transContainer = detailsTabs.getElementsByTagName("h1")[1].parentElement.parentElement;
+    const transContainer = tabsContainer.getElementsByTagName("h1")[1].parentElement.parentElement;
 
     const buttonContainer = transContainer.children[1].firstChild.firstChild;
     buttonContainer.style.display = "flex";
