@@ -11,9 +11,22 @@ function createCreditExport() {
     exportButton.innerText = "Exportar";
 
     exportButton.id = exportButtonId;
-    exportButton.className =
-      "ButtonCorestyle__StyledButton-canvas-core__sc-v39ho0-0 isoEur ButtonCore__button SecondaryButtonstyle__StyleSecondaryButtonCore-canvas-core__sc-1fquqhk-0 gGCHlM Button__button--secondary v1YOR28wgSR74iLV2PNvM";
     exportButton.style.width = "fit-content";
+    exportButton.style.color = "rgb(236, 17, 26)";
+    exportButton.style.backgroundColor = "rgb(255, 255, 255)";
+    exportButton.style.borderColor = "rgb(236, 17, 26)";
+    exportButton.style.minHeight = "5.4rem";
+    exportButton.style.minWidth = " 11.8rem";
+    exportButton.style.fontFamily = `"Scotia Bold", Arial, Helvetica, "sans-serif"`;
+    exportButton.style.fontSize = "1.6rem";
+    exportButton.style.lineHeight = "2rem";
+    exportButton.style.fontWeight = "initial";
+    exportButton.style.letterSpacing = "0rem";
+    exportButton.style.border = "0.1rem solid";
+    exportButton.style.borderRadius = "0.8rem";
+    exportButton.style.padding = "0px 30px";
+    exportButton.style.textDecoration = "none";
+    exportButton.style.cursor = "pointer";
 
     const transContainer = tabsContainer.getElementsByTagName("h1")[1].parentElement.parentElement;
 
