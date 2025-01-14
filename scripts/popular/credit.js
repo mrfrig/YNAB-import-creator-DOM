@@ -1,45 +1,40 @@
 function createCreditExport() {
-  const exportTable = document.querySelector(".titulo2 table tbody");
+  if (!window.location.pathname.includes("/cardtransactions")) return;
+  const exportButtonsDiv = document.querySelector("main div")?.children[1]?.children[2]?.children[1]?.children[2];
 
-  if (!exportTable) return;
+  if (!exportButtonsDiv) return;
 
-  const titles = document.querySelectorAll(".pestania2");
-
-  if (!titles.length) return;
-
-  const tr = document.createElement("tr");
-  const td1 = document.createElement("td");
-  td1.align = "right";
-  td1.vAlign = "top";
-  const button = createExportButton();
-  const td2 = document.createElement("td");
-  td2.className = "texto1";
-  td2.align = "top";
-  const span1 = document.createElement("span");
-  span1.className = "texto3";
-  span1.innerText = "YNAB:";
-  const span2 = document.createElement("span");
-  span2.innerText = " Archivo CSV.";
-
-  tr.appendChild(td1);
-  tr.appendChild(td2);
-  td1.appendChild(button);
-  td2.appendChild(span1);
-  td2.appendChild(span2);
-  exportTable.appendChild(tr);
+  const exportButtonId = "credit-export";
+  let exportButton = document.getElementById(exportButtonId);
+  if (!exportButton) {
+    const div = document.createElement("div");
+    div.className = "flex flex-row mt-2 content-center";
+    const ButtonImgDiv = document.createElement("div");
+    ButtonImgDiv.className = "mr-2 cursor-pointer";
+    const ButtonTextdiv = document.createElement("div");
+    ButtonTextdiv.className = "text-ultramar font-inter-regular text-base font-[600] leading-normal";
+    const button = createExportButton();
+    button.className = "flex flex-row cursor-pointer";
+    ButtonTextdiv.appendChild(button);
+    div.appendChild(ButtonImgDiv);
+    div.appendChild(ButtonTextdiv);
+    exportButtonsDiv.appendChild(div);
+  }
 
   function createExportButton() {
     const exportButton = document.createElement("button");
-    exportButton.innerText = "YNAB";
+    exportButton.innerText = "YNAB: Archivo CSV";
+    exportButton.id = exportButtonId;
 
     exportButton.addEventListener("click", () => {
+      const transTable = document.querySelectorAll("#main-content-div table")[1];
       let csv = "Date,Payee,Memo,Outflow,Inflow";
       const today = new Date();
       const currentMonth = today.getMonth();
       const currentYear = today.getFullYear();
 
-      for (const el of document.querySelectorAll(".md-maketable-reg-tr")) {
-        let date = el.children[1].innerText.replaceAll("&nbsp;", "").replaceAll(" ", "");
+      for (const el of transTable.querySelectorAll("tbody tr")) {
+        let date = el.children[0].innerText.replaceAll("&nbsp;", "").replaceAll(" ", "");
         let [day, month] = date.split("/");
         month = Number(month);
         day = Number(day);

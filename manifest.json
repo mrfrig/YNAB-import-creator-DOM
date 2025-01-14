@@ -12,7 +12,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.bpd.com.do/banco.popular.aspx*"],
+      "matches": ["https://ib.bpd.com.do/accountdetails*"],
       "js": [
         "scripts/createExportFile.js",
         "scripts/popular/account.js",
