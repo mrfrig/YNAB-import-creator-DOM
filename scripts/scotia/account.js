@@ -40,46 +40,41 @@ function createAccountExport() {
 
     exportButton.addEventListener("click", () => {
       let csv = "Date,Payee,Memo,Outflow,Inflow";
-      const dateMapping = {
-        ene: "01",
-        feb: "02",
-        mar: "03",
-        abr: "04",
-        may: "05",
-        jun: "06",
-        jul: "07",
-        ago: "08",
-        sep: "09",
-        oct: "10",
-        nov: "11",
-        dic: "12",
-      };
+      const id = window.location.pathname.split("/").at(-1);
+      var today = new Date();
+      var priorDate = new Date(new Date().setDate(today.getDate() - 30));
+      const fromDate = priorDate.toISOString().split("T")[0];
+      const toDate = today.toISOString().split("T")[0];
 
-      for (const el of tabsContainer.querySelectorAll("table tbody tr")) {
-        const memo = el.querySelector('[data-testid="linkLabel"]').firstChild.firstChild.innerText.replaceAll(",", "");
+      fetch(
+        `https://banking.online.scotiabank.com/account/api/deposits/${id}/transactions?fromDate=${fromDate}&toDate=${toDate}`,
+        { method: "GET", mode: "cors", credentials: "include" }
+      ).then((response) => {
+        response.json().then(({ data }) => {
+          let currency = "";
+          let rate = 1;
+          for (const record of data.records) {
+            if (!currency) {
+              currency = record.amount.currencyCode;
+              if (currency === "USD") rate = Number(prompt("Dollar rate"));
+            }
+            const amount = -record.amount.amount;
+            let memo = record.description.replaceAll("  ", "").replaceAll(",", "");
 
-        const date = el.firstChild.firstChild.innerText;
-        const year = date.split(",")[2].replaceAll(" ", "");
-        const month = dateMapping[date.split(",")[1].split(" ")[1].toLowerCase().replaceAll(" ", "")];
-        const day = date.split(",")[1].split(" ")[2].replaceAll(" ", "");
-        const transDate = `${month}/${day}/${year}`;
+            if (currency === "USD") memo = `${amount > 0 ? "" : "-"}$${Math.abs(amount)} ${currency} ${memo}`;
+            csv += `\n${record.transactionDate},,${memo},${amount * rate}`;
+          }
+          const fileName =
+            document
+              .getElementById("container")
+              ?.lastChild?.firstChild?.firstChild?.firstChild?.lastChild?.firstChild?.firstChild?.firstChild?.firstChild?.innerText.replaceAll(
+                " ",
+                ""
+              ) || "scotiaBankAccountExport";
 
-        const amount = el.children[2].firstChild.innerText;
-        const transAmount = amount.replaceAll("DOP", "").replaceAll("$", "").replaceAll(",", "").replaceAll(" ", "");
-
-        if (transAmount.includes("-")) csv += `\n${transDate},,${memo},${transAmount.replaceAll("-", "")},`;
-        else csv += `\n${transDate},,${memo},,${transAmount.replaceAll("-", "")}`;
-      }
-
-      const fileName =
-        document
-          .getElementById("container")
-          ?.lastChild?.firstChild?.firstChild?.firstChild?.lastChild?.firstChild?.firstChild?.firstChild?.firstChild?.innerText.replaceAll(
-            " ",
-            ""
-          ) || "scotiaBankAccountExport";
-
-      createExportFile(csv, fileName);
+          createExportFile(csv, fileName);
+        });
+      });
     });
   }
 }

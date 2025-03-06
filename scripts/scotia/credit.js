@@ -40,63 +40,42 @@ function createCreditExport() {
     buttonContainer.appendChild(exportButton);
 
     exportButton.addEventListener("click", () => {
-      let csv = "Date,Payee,Memo,Outflow,Inflow";
-      const dateMapping = {
-        ene: "01",
-        feb: "02",
-        mar: "03",
-        abr: "04",
-        may: "05",
-        jun: "06",
-        jul: "07",
-        ago: "08",
-        sep: "09",
-        oct: "10",
-        nov: "11",
-        dic: "12",
-      };
+      let csv = "Date,Payee,Memo,Amount";
+      const id = window.location.pathname.split("/").at(-1);
+      var today = new Date();
+      var priorDate = new Date(new Date().setDate(today.getDate() - 30));
+      const fromDate = priorDate.toISOString().split("T")[0];
+      const toDate = today.toISOString().split("T")[0];
 
-      let currency = "";
-      let rate = 1;
+      fetch(
+        `https://banking.online.scotiabank.com/account/api/creditcards/${id}/transactions?fromDate=${fromDate}&toDate=${toDate}&status=SETTLED&all=false`,
+        { method: "GET", mode: "cors", credentials: "include" }
+      ).then((response) => {
+        response.json().then(({ data }) => {
+          let currency = "";
+          let rate = 1;
+          for (const record of data.records) {
+            if (!currency) {
+              currency = record.amount.currencyCode;
+              if (currency === "USD") rate = Number(prompt("Dollar rate"));
+            }
+            const amount = -record.amount.amount;
+            let memo = record.description.replaceAll("  ", "").replaceAll(",", "");
 
-      for (const el of transContainer.querySelectorAll("table tbody tr")) {
-        let memo = el.querySelector('[data-testid="linkLabel"]').firstChild.firstChild.innerText.replaceAll(",", "");
-
-        const date = el.firstChild.firstChild.innerText;
-        const year = date.split(",")[2].replaceAll(" ", "");
-        const month = dateMapping[date.split(",")[1].split(" ")[1].toLowerCase().replaceAll(" ", "")];
-        const day = date.split(",")[1].split(" ")[2].replaceAll(" ", "");
-        const transDate = `${month}/${day}/${year}`;
-
-        const amount = el.children[2].firstChild.innerText;
-
-        if (!currency) {
-          if (amount.includes("DOP")) currency = "DOP";
-          else {
-            currency = "USD";
-            rate = Number(prompt("Dollar rate"));
+            if (currency === "USD") memo = `${amount > 0 ? "" : "-"}$${Math.abs(amount)} ${currency} ${memo}`;
+            csv += `\n${record.transactionDate},,${memo},${amount * rate}`;
           }
-        }
+          const fileName =
+            document
+              .getElementById("container")
+              ?.lastChild?.firstChild?.firstChild?.firstChild?.lastChild?.firstChild?.firstChild?.firstChild?.firstChild?.innerText.replaceAll(
+                " ",
+                ""
+              ) || "scotiaBankCreditExport";
 
-        let transAmount = amount.replaceAll(currency, "").replaceAll("$", "").replaceAll(",", "").replaceAll(" ", "");
-        transAmount = Number(transAmount) * Number(rate);
-        transAmount = transAmount.toString();
-
-        if (currency === "USD") memo = `${amount.replaceAll(",", "")} ${memo}`;
-
-        if (transAmount.includes("-")) csv += `\n${transDate},,${memo},,${transAmount.replaceAll("-", "")}`;
-        else csv += `\n${transDate},,${memo},${transAmount},`;
-      }
-
-      const fileName =
-        document
-          .getElementById("container")
-          ?.lastChild?.firstChild?.firstChild?.firstChild?.lastChild?.firstChild?.firstChild?.firstChild?.firstChild?.innerText.replaceAll(
-            " ",
-            ""
-          ) || "scotiaBankCreditExport";
-
-      createExportFile(csv, fileName);
+          createExportFile(csv, fileName);
+        });
+      });
     });
   }
 }
