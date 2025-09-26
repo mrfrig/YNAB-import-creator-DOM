@@ -45,18 +45,18 @@ function createAccountExport() {
 
       for (const el of document.querySelectorAll("tbody tr.ng-star-inserted")) {
         if (el.children.length < 2) continue;
-        const date = el.children[1].innerText.replaceAll(" ", "");
+        const date = el.children[0].innerText.replaceAll(" ", "");
 
-        const memo = el.children[3].innerText.replaceAll(",", "");
+        const memo = el.children[2].innerText.replaceAll(",", "");
 
         const outflow =
           Number(
-            el.children[5].innerText.replaceAll(",", "").replaceAll("RD$", "").replaceAll(" ", "").replaceAll("-", "")
+            el.children[4].innerText.replaceAll(",", "").replaceAll("RD$", "").replaceAll(" ", "").replaceAll("-", "")
           ) || "";
 
         const inflow =
           Number(
-            el.children[6].innerText.replaceAll(",", "").replaceAll("RD$", "").replaceAll(" ", "").replaceAll("-", "")
+            el.children[5].innerText.replaceAll(",", "").replaceAll("RD$", "").replaceAll(" ", "").replaceAll("-", "")
           ) || "";
 
         csv += `\n${date},,${memo},${outflow},${inflow}`;
