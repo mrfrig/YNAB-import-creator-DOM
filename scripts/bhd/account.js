@@ -43,7 +43,9 @@ function createAccountExport() {
     exportButton.addEventListener("click", () => {
       let csv = "Date,Payee,Memo,Outflow,Inflow";
 
-      for (const el of document.querySelectorAll("tbody tr.ng-star-inserted")) {
+      const tables = document.querySelectorAll("ibp-table-movements table");
+
+      for (const el of tables[1].querySelectorAll("tbody tr.ng-star-inserted")) {
         if (el.children.length < 2) continue;
         const date = el.children[0].innerText.replaceAll(" ", "");
 
