@@ -23,6 +23,13 @@ for (listGroup of document.getElementsByTagName("bb-transactions-list-item-group
     let month = today.getMonth() + 1;
     month = month.toString().length == 1 ? `0${month}` : month.toString();
     date = `${day}/${month}/${today.getFullYear()}`;
+  } else if (date === "AYER") {
+    const today = new Date();
+    today.setDate(today.getDate() - 1);
+    const day = today.getDate().toString().length == 1 ? `0${today.getDate()}` : today.getDate().toString();
+    let month = today.getMonth() + 1;
+    month = month.toString().length == 1 ? `0${month}` : month.toString();
+    date = `${day}/${month}/${today.getFullYear()}`;
   } else {
     const dateSplit = date.split(" ");
     const day = dateSplit[0].length == 1 ? `0${dateSplit[0]}` : dateSplit[0];
