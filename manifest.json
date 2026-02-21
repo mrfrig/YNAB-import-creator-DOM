@@ -38,6 +38,10 @@
         "scripts/bhd/credit.js",
         "scripts/bhd/main.js"
       ]
+    },
+    {
+      "matches": ["https://bscenlinea.com.do/onlinebanking/*"],
+      "js": ["scripts/createExportFile.js", "scripts/santaCruz/main.js"]
     }
   ]
 }
