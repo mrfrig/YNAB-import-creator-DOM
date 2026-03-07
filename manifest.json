@@ -42,6 +42,10 @@
     {
       "matches": ["https://bscenlinea.com.do/onlinebanking/*"],
       "js": ["scripts/createExportFile.js", "scripts/santaCruz/main.js"]
+    },
+    {
+      "matches": ["https://ibanking.coopsanjose.com.do/*"],
+      "js": ["scripts/createExportFile.js", "scripts/coopSanJose/main.js"]
     }
   ]
 }
