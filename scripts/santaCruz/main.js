@@ -33,28 +33,42 @@ function createCreditExport() {
 
   btn.addEventListener("click", () => {
     let csv = "Date,Payee,Memo,Outflow,Inflow";
+    let currency = "";
+    let rate = 1;
 
     rows.forEach((row) => {
       const labelEl = row.querySelector(".core-transaction__info-label");
       const dateEl = row.querySelector(".core-transaction__info-date");
       const balanceEl = row.querySelector(".core-transaction__info-balance");
 
-      const memo = labelEl ? labelEl.innerText.trim().replaceAll(",", "") : "";
+      let memo = labelEl ? labelEl.innerText.trim().replaceAll(",", "") : "";
       const date = dateEl ? dateEl.innerText.trim() : "";
       let amount = "";
+
       if (balanceEl) {
+        if (!currency) {
+          if (balanceEl.innerText.includes("US$")) {
+            currency = "US$";
+            rate = Number(prompt("Dollar rate"));
+          } else {
+            currency = "RD$";
+          }
+        }
+
         amount = balanceEl.innerText
-          .replaceAll("RD$", "")
+          .replaceAll(currency, "")
           .replaceAll(",", "")
           .replaceAll(" ", "")
           .replace("-", "")
           .trim();
       }
 
+      if (currency === "US$") memo = `${currency}${amount} ${memo}`;
+
       if (balanceEl && balanceEl.className.includes("DEBIT")) {
-        csv += `\n${date},,${memo},${amount},`;
+        csv += `\n${date},,${memo},${Number(amount) * rate},`;
       } else {
-        csv += `\n${date},,${memo},,${amount}`;
+        csv += `\n${date},,${memo},,${Number(amount) * rate}`;
       }
     });
 
