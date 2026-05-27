@@ -45,7 +45,7 @@ function createAccountExport() {
 
       const tables = document.querySelectorAll("ibp-table-movements table");
 
-      for (const el of tables[1].querySelectorAll("tbody tr.ng-star-inserted")) {
+      for (const el of tables[0].querySelectorAll("tbody tr.ng-star-inserted")) {
         if (el.children.length < 2) continue;
         const date = el.children[0].innerText.replaceAll(" ", "");
 
@@ -53,12 +53,12 @@ function createAccountExport() {
 
         const outflow =
           Number(
-            el.children[4].innerText.replaceAll(",", "").replaceAll("RD$", "").replaceAll(" ", "").replaceAll("-", "")
+            el.children[4].innerText.replaceAll(",", "").replaceAll("RD$", "").replaceAll(" ", "").replaceAll("-", ""),
           ) || "";
 
         const inflow =
           Number(
-            el.children[5].innerText.replaceAll(",", "").replaceAll("RD$", "").replaceAll(" ", "").replaceAll("-", "")
+            el.children[5].innerText.replaceAll(",", "").replaceAll("RD$", "").replaceAll(" ", "").replaceAll("-", ""),
           ) || "";
 
         csv += `\n${date},,${memo},${outflow},${inflow}`;

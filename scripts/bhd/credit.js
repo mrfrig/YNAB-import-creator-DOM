@@ -50,7 +50,7 @@ function createCreditExport() {
 
       const tables = document.querySelectorAll("ibp-table-movements table");
 
-      for (const el of tables[1].querySelectorAll("tbody tr.ng-star-inserted")) {
+      for (const el of tables[0].querySelectorAll("tbody tr.ng-star-inserted")) {
         if (el.children.length < 2) continue;
         const date = el.children[1].children[0].innerText.replaceAll(" ", "");
         const amount = el.children[4].children[0]?.innerText || el.children[5].children[0]?.innerText || undefined;
@@ -67,7 +67,7 @@ function createCreditExport() {
               .replaceAll(",", "")
               .replaceAll(currency, "")
               .replaceAll(" ", "")
-              .replaceAll("-", "")
+              .replaceAll("-", ""),
           ) || "";
 
         let inflow =
@@ -76,7 +76,7 @@ function createCreditExport() {
               .replaceAll(",", "")
               .replaceAll(currency, "")
               .replaceAll(" ", "")
-              .replaceAll("-", "")
+              .replaceAll("-", ""),
           ) || "";
 
         csv += `\n${date},,${memo},${outflow},${inflow}`;
@@ -90,7 +90,7 @@ function createCreditExport() {
       const rate = Number(prompt("Dollar rate")) || 1;
       const tables = document.querySelectorAll("ibp-table-movements table");
 
-      for (const el of tables[1].querySelectorAll("tbody tr.ng-star-inserted")) {
+      for (const el of tables[0].querySelectorAll("tbody tr.ng-star-inserted")) {
         if (el.children.length < 2) continue;
         const date = el.children[1].children[0].innerText.replaceAll(" ", "");
         const amount = el.children[4].children[0]?.innerText || el.children[5].children[0]?.innerText || undefined;
@@ -108,7 +108,7 @@ function createCreditExport() {
               .replaceAll(",", "")
               .replaceAll(currency, "")
               .replaceAll(" ", "")
-              .replaceAll("-", "")
+              .replaceAll("-", ""),
           ) || "";
 
         let inflow =
@@ -117,7 +117,7 @@ function createCreditExport() {
               .replaceAll(",", "")
               .replaceAll(currency, "")
               .replaceAll(" ", "")
-              .replaceAll("-", "")
+              .replaceAll("-", ""),
           ) || "";
 
         outflow = outflow * rate || "";
