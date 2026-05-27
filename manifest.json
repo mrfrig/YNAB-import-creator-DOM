@@ -12,7 +12,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://ib.bpd.com.do/accountdetails*"],
+      "matches": ["https://ib.bpd.com.do/*"],
       "js": [
         "scripts/createExportFile.js",
         "scripts/popular/account.js",
